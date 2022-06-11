@@ -1,0 +1,37 @@
+{
+  "name": "challenge-nginx-nodejs",
+  "version": "1.0.0",
+  "description": "Using NGINX as a proxy for a node application.",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node ./src/index.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afornagieri/challenge-nginx-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afornagieri/challenge-nginx-nodejs/issues"
+  },
+  "homepage": "https://github.com/afornagieri/challenge-nginx-nodejs#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.41",
+    "@types/pg": "^8.6.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "typescript": "^4.7.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.8.1"
+  }
+}
