@@ -6,10 +6,10 @@ class DBClient {
 
   constructor() {
     this.credentials = {
-      user: process.env.USERDB,
-      host: process.env.HOST,
+      user: process.env.DBUSER,
+      host: process.env.DBHOST,
       database: process.env.DATABASE,
-      password: process.env.PASSWORD,
+      password: process.env.DBPASSWORD,
       dbport: process.env.DBPORT
     };
   }
