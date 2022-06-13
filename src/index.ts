@@ -3,13 +3,13 @@ import cors from "cors";
 
 import NamesRoutes from './routes/NamesRoutes';
 
-const PORT = process.env.PORT || 3000;
-const HOSTNAME = process.env.HOSTNAME || "localhost";
+const PORT = process.env.PORT || 5000;
+const HOSTNAME = process.env.HOSTNAME || "127.0.0.1";
 
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:3000"]
+  origin: [`http://${HOSTNAME}:${PORT}`]
 }));
 
 app.use(express.json());
