@@ -6,7 +6,6 @@ import DBClient from "../repositories/database";
 const NamesRoutes = express.Router();
 
 NamesRoutes.get("/names", async (req, res) => {
-    //retornar do banco, todos os nomes
     let db: DBClient = new DBClient();
     let data: QueryResult<any>;
 
