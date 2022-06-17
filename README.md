@@ -8,6 +8,8 @@ docker-compose up -d
 
 ## Endpoints
 
+### GET /index
+
 ### GET /api/names
 #### Response example:
 ```JSON
