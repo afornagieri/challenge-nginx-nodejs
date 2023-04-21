@@ -2,24 +2,44 @@ version: "3.9"
 
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile.postgres_db
+    image: mysql:8.0
+     # The cap_add set to SYS_NICE suppresses some not useful error messages.
+    # https://stackoverflow.com/questions/55559386/how-to-fix-mbind-operation-not-permitted-in-mysql-error-log/55706057#55706057
+    cap_add:
+      - SYS_NICE
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - MYSQL_DATABASE=$DATABASE
+      - MYSQL_USER=$DBUSER
+      - MYSQL_PASSWORD=$DBPASSWORD
+      - MYSQL_ROOT_PASSWORD=$DBROOTPASSWORD
     ports: 
-      - '5432:5432'
+      - $DBPORT:$DBPORT
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/CreateDatabase.sql:/docker-entrypoint-initdb.d/CreateDatabase.sql
 
   app:
     build:
       context: .
       dockerfile: Dockerfile.app
     restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - HOSTNAME=$HOSTNAME
+      - PORT=$PORT
+      - DATABASE=$DATABASE
+      - DBUSER=$DBUSER
+      - DBPASSWORD=$DBPASSWORD
+      - DBROOTPASSWORD=$DBROOTPASSWORD
+      - DBHOST=db
+      - DBPORT=$DBPORT
     ports:
-      - "5000:5000"
+      - $PORT:$PORT
     depends_on:
-    - db
+      - db
 
   nginx:
     build:
@@ -37,3 +57,6 @@ networks:
 volumes:
   db:
     driver: local
+
+
+    

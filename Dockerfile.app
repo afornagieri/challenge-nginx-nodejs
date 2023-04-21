@@ -1,13 +1,11 @@
-FROM node:lts-alpine
+FROM node:alpine
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm install && npx tsc
+
 RUN npm run build
-RUN npx tsc
 
-EXPOSE 5000
-
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
