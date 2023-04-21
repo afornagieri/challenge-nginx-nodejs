@@ -27,9 +27,12 @@
         console.error(`XHR error ${request.status}`);
       }
 
-      JSON.parse(localStorage.getItem('data')).forEach(el => {
-        document.querySelector('ol').insertAdjacentHTML('beforeend', `<li>${el.name}</li>`);
-      });
+      if (localStorage.getItem('data') != null)
+      {
+        JSON.parse(localStorage.getItem('data')).forEach(el => {
+          document.querySelector('ol').insertAdjacentHTML('beforeend', `<li>${el.name}</li>`);
+        });
+      }
     </script>
 </body>
 </html>
