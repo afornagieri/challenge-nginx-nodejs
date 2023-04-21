@@ -8,15 +8,16 @@ docker-compose up -d
 
 ## Endpoints
 
-### GET /index
+### Home page
+### GET localhost:8080/index
 
-### GET /api/names
+### GET localhost:8080/api/names
 #### Response example:
 ```JSON
 { "id": "1", "name": "Maria"}
 ```
 
-### POST /api/name
+### POST localhost:8080/api/name
 #### Request body example
 ```JSON
 { "name": "João" }
