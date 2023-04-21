@@ -2,14 +2,12 @@ import express from "express";
 import cors from "cors";
 import NamesRoutes from './routes/NamesRoutes';
 
-const PORT = process.env.PORT;
 const HOSTNAME = process.env.HOSTNAME;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(cors({
-  origin: [`http://${HOSTNAME}:${PORT}`]
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

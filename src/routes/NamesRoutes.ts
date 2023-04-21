@@ -1,28 +1,41 @@
 import express from "express";
-import { QueryResult } from "pg";
-import Name from "../models/Name";
+
 import DBClient from "../repositories/database";
+
+import Name from "../models/Name";
 
 const NamesRoutes = express.Router();
 
 NamesRoutes.get("/names", async (req, res) => {
+    let data: any;
+    
     let db: DBClient = new DBClient();
-    let data: QueryResult<any>;
+    let client = await db.connect();
 
-    await db.clientdb().connect();
-    data = await db.clientdb().query("SELECT * FROM names;");
+    try {
+        data = await client.query("SELECT * FROM peoples;");
 
-    res.status(200).send(data.rows);
+        const [rows, fields] = data;
+        res.status(200).send(rows);
+    } catch (error) {
+        console.log(error);
+    }
+
 });
 
 NamesRoutes.post("/name", async (req, res) => {
     const name : Name = req.body;
+    
     let db: DBClient = new DBClient();
+    let client = await db.connect();
 
-    await db.clientdb().connect();
-    await db.clientdb().query(`INSERT INTO names (name) VALUES ('${name.name}');`);
+    try {
+        await client.query(`INSERT INTO peoples (name) VALUES ('${name.name}');`);
+        res.status(201).location("/names").send();
+    } catch (error) {
+        console.log(error);
+    }
 
-    res.status(201).location("/names").send();
 });
 
 export default NamesRoutes

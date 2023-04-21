@@ -1,22 +1,21 @@
-import { Pool } from "pg";
-import "dotenv/config";
+import mysql from "mysql2";
 
 class DBClient {
   protected credentials = {};
 
   constructor() {
     this.credentials = {
-      user: process.env.DBUSER,
       host: process.env.DBHOST,
-      database: process.env.DATABASE,
+      user: process.env.DBUSER,
       password: process.env.DBPASSWORD,
-      dbport: process.env.DBPORT
+      database: process.env.DATABASE,
+      port: process.env.DBPORT
     };
   }
 
-  public clientdb(): Pool {
-    const client = new Pool(this.credentials);
-    return client;
+  public async connect() {
+    const client = mysql.createPool(this.credentials);
+    return client.promise();
   }
 }
 
