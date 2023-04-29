@@ -1,6 +1,13 @@
 version: "3.9"
 
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+    - "8080:80"
+
   db:
     image: mysql:8.0
      # The cap_add set to SYS_NICE suppresses some not useful error messages.
@@ -19,6 +26,8 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./db/CreateDatabase.sql:/docker-entrypoint-initdb.d/CreateDatabase.sql
+    depends_on:
+      - nginx
 
   app:
     build:
@@ -38,17 +47,6 @@ services:
       - DBPORT=$DBPORT
     ports:
       - $PORT:$PORT
-    depends_on:
-      - db
-
-  nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    ports:
-    - "8080:80"
-    depends_on:
-    - app
   
 networks:
   default:
@@ -56,7 +54,4 @@ networks:
 
 volumes:
   db:
-    driver: local
-
-
-    
+    driver: local    
